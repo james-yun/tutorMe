@@ -110,7 +110,7 @@ FOR EACH ROW
       SELECT * FROM availability_slot 
       WHERE new.tutor_id = tutor_id 
       AND new.start_time >= start_time 
-      AND new.start_time <= DATE_ADD(start_time, INTERVAL duration MINUTE)
+      AND new.start_time < DATE_ADD(start_time, INTERVAL duration MINUTE)
       )
     THEN
     SET new.start_time = NULL;
@@ -166,10 +166,29 @@ CREATE TABLE IF NOT EXISTS requests(
   CONSTRAINT cannot_request_yourself CHECK (student_id <> tutor_id)
 );
 
+DELIMITER $$
+CREATE TRIGGER tutor_not_available
+BEFORE INSERT ON requests
+FOR EACH ROW
+  BEGIN
+    IF NOT EXISTS (
+      SELECT * FROM availability_slot 
+      WHERE new.tutor_id = tutor_id 
+      AND new.start_time >= start_time 
+      AND new.start_time <= DATE_ADD(start_time, INTERVAL duration MINUTE)
+      AND DATE_ADD(new.start_time, INTERVAL new.duration MINUTE) <= DATE_ADD(start_time, INTERVAL duration MINUTE)
+      )
+    THEN
+    SET new.student_id = NULL;
+    END IF;
+  END
+$$
+DELIMITER ;
+
 INSERT INTO requests (student_id, tutor_id, course_number, location, start_time, duration, price, isAccepted) VALUES
-('jp8su', 'jy2gm', 'CS 4102', 'Rice Hall', CURRENT_TIMESTAMP, 60, 20, 0),
-('jp5qw', 'up3f', 'CS 4750', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 1),
-('rb2eu', 'up3f', 'CS 4750', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 0);
+('jp8su', 'jy2gm', 'CS 4102', 'Rice Hall', '2020-01-01 09:00:00', 60, 20, 0),
+('jp5qw', 'up3f', 'CS 4750', 'Mech 205', '2020-01-01 13:00:00', 60, 20, 1),
+('rb2eu', 'up3f', 'CS 4750', 'Mech 205', '2020-01-01 14:00:00', 60, 20, 0);
 
 -- tutor_me_in(student_id, course_number)
 CREATE TABLE IF NOT EXISTS tutor_me_in (
