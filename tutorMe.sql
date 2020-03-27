@@ -91,6 +91,40 @@ INSERT INTO teaches (tutor_id, course_number) VALUES
 ('up3f', 'CS 4750'),
 ('up3f', 'CS 3250');
 
+-- availability_slot(tutor_id, start_time, duration)
+-- FDs = {tutor_id -> start_time, duration}
+CREATE TABLE IF NOT EXISTS availability_slot (
+  tutor_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
+  start_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  duration INT NOT NULL DEFAULT 60,
+  PRIMARY KEY (tutor_id, start_time, duration),
+  FOREIGN KEY (tutor_id) REFERENCES student(student_id)
+);
+
+DELIMITER $$
+CREATE TRIGGER overlapping_availability
+BEFORE INSERT ON availability_slot
+FOR EACH ROW
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM availability_slot 
+      WHERE new.tutor_id = tutor_id 
+      AND new.start_time >= start_time 
+      AND new.start_time <= DATE_ADD(start_time, INTERVAL duration MINUTE)
+      )
+    THEN
+    SET new.start_time = NULL;
+    END IF;
+  END
+$$
+DELIMITER ;
+
+INSERT INTO availability_slot (tutor_id, start_time, duration) VALUES
+('jy2gm', '2020-01-01 00:00:00', 1440),
+('jy2gm', '2020-01-03 00:00:00', 1440),
+('jy2gm', '2020-01-05 00:00:00', 1440),
+('up3f', '2020-01-01 00:00:00', 1440);
+
 -- reviews(student_id, tutor_id, course_number, star_rating, comment, timestamp)
 CREATE TABLE IF NOT EXISTS reviews (
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
@@ -128,13 +162,14 @@ CREATE TABLE IF NOT EXISTS requests(
   FOREIGN KEY (student_id) REFERENCES student(student_id),
   FOREIGN KEY (course_number) REFERENCES course(course_number),
   FOREIGN KEY (tutor_id, location) REFERENCES locations(tutor_id, location),
+  FOREIGN KEY (tutor_id, course_number) REFERENCES teaches(tutor_id, course_number),
   CONSTRAINT cannot_request_yourself CHECK (student_id <> tutor_id)
 );
 
 INSERT INTO requests (student_id, tutor_id, course_number, location, start_time, duration, price, isAccepted) VALUES
 ('jp8su', 'jy2gm', 'CS 4102', 'Rice Hall', CURRENT_TIMESTAMP, 60, 20, 0),
 ('jp5qw', 'up3f', 'CS 4750', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 1),
-('rb2eu', 'jy2gm', 'CS 4750', 'Clark Hall', CURRENT_TIMESTAMP, 60, 20, 0);
+('rb2eu', 'up3f', 'CS 4750', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 0);
 
 -- tutor_me_in(student_id, course_number)
 CREATE TABLE IF NOT EXISTS tutor_me_in (
