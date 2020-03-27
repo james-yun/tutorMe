@@ -20,7 +20,7 @@ INSERT INTO student (student_id, phone_number, first_name, last_name, venmo_id) 
 -- course(course_number, course_name)
 CREATE TABLE IF NOT EXISTS course (
   course_number VARCHAR(10) NOT NULL DEFAULT 'XX 0000',
-  course_name VARCHAR(100) NOT NULL DEFAULT 'INTro to INTros', 
+  course_name VARCHAR(100) NOT NULL DEFAULT 'Intro to Intros', 
   PRIMARY KEY (course_number)
 );
 
