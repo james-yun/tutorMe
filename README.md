@@ -3,6 +3,8 @@
 ## Database Login
 https://cs4750.cs.virginia.edu/phpMyAdmin/index.php
 
+@james-yun
+
 Name | Username | Password
 ------------ | ------------- | -------------
 James | jy2gm | ***
