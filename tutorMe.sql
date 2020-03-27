@@ -91,30 +91,34 @@ INSERT INTO teaches (tutor_id, course_number) VALUES
 ('up3f', 'CS 4750'),
 ('up3f', 'CS 3250');
 
--- reviews(student_id, tutor_id, star_rating, comment, timestamp)
+-- reviews(student_id, tutor_id, course_number, star_rating, comment, timestamp)
 CREATE TABLE IF NOT EXISTS reviews (
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
   tutor_id VARCHAR(7) NOT NULL DEFAULT 'xyz2abc',
+  course_number VARCHAR(10) NOT NULL DEFAULT 'ECON 9999',
   star_rating INT(5) NOT NULL DEFAULT 5,
   comment VARCHAR(250) DEFAULT '',
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (student_id, tutor_id, `timestamp`),
   FOREIGN KEY (student_id) REFERENCES student(student_id),
-  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id)
+  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id),
+  FOREIGN KEY (course_number) REFERENCES course(course_number),
+  CONSTRAINT cannot_review_yourself CHECK (student_id <> tutor_id)
 );
 
-INSERT INTO reviews (student_id, tutor_id, star_rating, comment, `timestamp`) VALUES
-('jp8su', 'jy2gm', 5, 'smort', CURRENT_TIMESTAMP),
-('rb2eu', 'jy2gm', 2, 'not the best tutor out there', CURRENT_TIMESTAMP),
-('jp8su', 'up3f', 5, 'cool prof', CURRENT_TIMESTAMP),
-('jy2gm', 'up3f', 4, 'always friendly', CURRENT_TIMESTAMP),
-('jp5qw', 'up3f', 5, 'good explanations', CURRENT_TIMESTAMP);
+INSERT INTO reviews (student_id, tutor_id, course_number, star_rating, comment, `timestamp`) VALUES
+('jp8su', 'jy2gm', 'CS 4102', 5, 'smort', CURRENT_TIMESTAMP),
+('rb2eu', 'jy2gm', 'CS 4102', 2, 'not the best tutor out there', CURRENT_TIMESTAMP),
+('jp8su', 'up3f', 'CS 4750', 5, 'cool prof', CURRENT_TIMESTAMP),
+('jy2gm', 'up3f', 'CS 3250', 4, 'always friendly', CURRENT_TIMESTAMP),
+('jp5qw', 'up3f', 'CS 4750', 5, 'good explanations', CURRENT_TIMESTAMP);
 
--- requests(request_id, student_id, tutor_id, location, start_time, end_time, price, isAccepted)
+-- requests(request_id, student_id, tutor_id, course_number, location, start_time, end_time, price, isAccepted)
 CREATE TABLE IF NOT EXISTS requests(
   request_id INT NOT NULL AUTO_INCREMENT,
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
   tutor_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
+  course_number VARCHAR(10) NOT NULL DEFAULT 'ECON 9999',
   location VARCHAR(20) NOT NULL DEFAULT '',
   start_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   duration INT NOT NULL DEFAULT 60,
@@ -122,18 +126,20 @@ CREATE TABLE IF NOT EXISTS requests(
   isAccepted TINYINT(1) DEFAULT 0,
   PRIMARY KEY (request_id),
   FOREIGN KEY (student_id) REFERENCES student(student_id),
-  FOREIGN KEY (tutor_id, location) REFERENCES locations(tutor_id, location)
+  FOREIGN KEY (course_number) REFERENCES course(course_number),
+  FOREIGN KEY (tutor_id, location) REFERENCES locations(tutor_id, location),
+  CONSTRAINT cannot_request_yourself CHECK (student_id <> tutor_id)
 );
 
-INSERT INTO requests (student_id, tutor_id, location, start_time, duration, price, isAccepted) VALUES
-('jp8su', 'jy2gm', 'Rice Hall', CURRENT_TIMESTAMP, 60, 20, 0),
-('jp5qw', 'up3f', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 1),
-('rb2eu', 'jy2gm', 'Clark Hall', CURRENT_TIMESTAMP, 60, 20, 0);
+INSERT INTO requests (student_id, tutor_id, course_number, location, start_time, duration, price, isAccepted) VALUES
+('jp8su', 'jy2gm', 'CS 4102', 'Rice Hall', CURRENT_TIMESTAMP, 60, 20, 0),
+('jp5qw', 'up3f', 'CS 4750', 'Mech 205', CURRENT_TIMESTAMP, 60, 20, 1),
+('rb2eu', 'jy2gm', 'CS 4750', 'Clark Hall', CURRENT_TIMESTAMP, 60, 20, 0);
 
--- tutor_me_in(student_id, course_number, course_name)
+-- tutor_me_in(student_id, course_number)
 CREATE TABLE IF NOT EXISTS tutor_me_in (
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
-  course_number VARCHAR(10) NOT NULL DEFAULT 'ECON9999',
+  course_number VARCHAR(10) NOT NULL DEFAULT 'ECON 9999',
   PRIMARY KEY (student_id, course_number),
   FOREIGN KEY (student_id) REFERENCES student(student_id),
   FOREIGN KEY (course_number) REFERENCES course(course_number)
