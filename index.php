@@ -1,4 +1,7 @@
-<?php require 'connectdb.php'; ?>
+<?php
+  require 'connectdb.php';
+  require 'sql.php'
+?>
 
 <!doctype html>
 <html lang="en">
@@ -21,12 +24,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <title>TutorMe</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="index.html">TutorMe</a>
+    <a class="navbar-brand" href="index.php">TutorMe</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,14 +55,11 @@
           </div>
         </li>
 
-
       </ul>
     </div>
   </nav>
 
   <div class="container" style="margin-top: 1%;">
-
-
     <!-- Jumbotron -->
     <div class="jumbotron">
       <h1 class="display-4">Welcome to TutorMe!</h1>
@@ -74,47 +75,40 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">id</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
+          <th scope="col">Course number</th>
+          <th scope="col">Course name</th>
+          <th scope="col">Tutor</th>
+          <th scope="col">Rating</th>
           <th scope="col">Request</th>
         </tr>
       </thead>
+
       <tbody>
+        <?php
+          $lessons = getLessons();
+          foreach ($lessons as $lesson):
+        ?>
         <tr>
-          <th scope="row">jy2gm</th>
-          <td>James</td>
-          <td>Yun</td>
+          <td>
+            <?php echo $lesson['course_number']; ?>
+          </td>
+          <td>
+            <?php echo $lesson['course_name']; ?>
+          </td>
+          <td>
+            <?php echo $lesson['tutor']; ?>
+          </td>
+          <td>
+            <?php echo $lesson['avg_star_rating']; ?>
+          </td>
           <td>
             <a class="btn btn-primary btn-sm" href="#" role="button">Request tutor</a>
           </td>
         </tr>
-        <tr>
-          <th scope="row">rb2eu</th>
-          <td>Rahul</td>
-          <td>Batra</td>
-          <td>
-            <a class="btn btn-primary btn-sm" href="#" role="button">Request tutor</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">jp8su</th>
-          <td>Jeevna</td>
-          <td>Prakash</td>
-          <td>
-            <a class="btn btn-primary btn-sm" href="#" role="button">Request tutor</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">jp5qw</th>
-          <td>Lindsay</td>
-          <td>Park</td>
-          <td>
-            <a class="btn btn-primary btn-sm" href="#" role="button">Request tutor</a>
-          </td>
-        </tr>
+        <?php endforeach;?>
       </tbody>
     </table>
+  </div>
 </body>
 
 </html>

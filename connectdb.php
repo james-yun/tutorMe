@@ -3,22 +3,18 @@
 /******************************/
 // connecting to GCP cloud SQL instance
 
- $username = 'root';
- $password = 'tutorme';
+$username = 'root';
+$password = 'tutorme';
+$dbname = 'tutorMe';
+$host = '35.245.17.157';
 
- $dbname = 'tutorMe';
+// connect from App Engine
+$dsn = "mysql:unix_socket=/cloudsql/cs4750db-275021:us-east4:db-tutorme;dbname=$dbname";
 
-// if PHP is on GCP standard App Engine, use instance name to connect
- $host = 'db-tutorme';
-
-// if PHP is hosted somewhere else (non-GCP), use public IP address to connect
-// $host = '35.245.17.157';
-
+// connect using public IP (local dev)
+$dsn = "mysql:host=$host;dbname=$dbname";
 
 /******************************/
-
-$dsn = "mysql:host=$host;dbname=$dbname";
-$dsn = "mysql:unix_socket=/cloudsql/cs4750db-275021:us-east4:db-tutorme;dbname=$dbname";
 
 /** connect to the database **/
 try
