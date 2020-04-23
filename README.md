@@ -1,6 +1,7 @@
 # tutorMe
 
 ## Database Login
+# database is now on Google Cloud Platform
 https://cs4750.cs.virginia.edu/phpMyAdmin/index.php
 
 
