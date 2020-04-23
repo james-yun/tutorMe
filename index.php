@@ -24,6 +24,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
+  <style>
+    <?php include 'style.css'; ?>
+  </style>
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>TutorMe</title>
 </head>
@@ -40,7 +43,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="request.html">Request a Tutor! <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="request.php">Request a Tutor! <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item dropdown">
@@ -68,7 +71,7 @@
       </p>
       <hr class="my-4">
       <p>Select tutors by class, location, and rating.</p>
-      <a class="btn btn-primary btn-lg" href="request.html" role="button">Request a tutor</a>
+      <a class="btn btn-primary btn-lg" href="request.php" role="button">Request a tutor</a>
     </div>
 
     <!-- Main Body -->
