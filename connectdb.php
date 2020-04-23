@@ -18,6 +18,7 @@
 /******************************/
 
 $dsn = "mysql:host=$host;dbname=$dbname";
+$dsn = "mysql:unix_socket=/cloudsql/cs4750db-275021:us-east4:db-tutorme;dbname=$dbname";
 
 /** connect to the database **/
 try
