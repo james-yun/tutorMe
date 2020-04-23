@@ -9,7 +9,7 @@
  $dbname = 'tutorMe';
 
 // if PHP is on GCP standard App Engine, use instance name to connect
- $host = 'cs4750db-275021:us-east4:db-tutorme';
+ $host = 'db-tutorme';
 
 // if PHP is hosted somewhere else (non-GCP), use public IP address to connect
 // $host = '35.245.17.157';
