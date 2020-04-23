@@ -1,4 +1,4 @@
------------------------------ Create and populate tables -----------------------------
+-- Create and populate tables
 
 -- https://docs.google.com/document/d/1GcQTdP4tdWakXyjDmUXz2QnnzqDd228vHhhRqt60NrY/edit
 -- student(student_id, phone_number, first_name, last_name, venmo_id)
