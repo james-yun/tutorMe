@@ -10,7 +10,7 @@ switch (@parse_url($_SERVER['REQUEST_URI'])['path']) {
   case '/':
     require 'homepage.php';
     break;
-  case '/contact.php':
+  case '/request.php':
     require 'request.php';
     break;
   default:
