@@ -1,1 +1,6 @@
 runtime: php73
+
+handlers:
+  # Serve a directory as a static resource.
+  - url: /static
+    static_dir: static
