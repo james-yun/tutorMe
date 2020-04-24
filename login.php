@@ -36,10 +36,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="theme-color" content="#563d7c">
     <link rel="stylesheet" href="static/signin.css">
-
   </head>
+
   <body class="text-center">
-    <form class="form-signin" method="post" action="login.php">
+    <form class="form-signin" method="post" action="login">
       <img class="mb-4" src="https://conejovalleytutor.com/wp-content/uploads/2015/06/sq-011-300x300.png" alt="TutorMe" width="120" height="120">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <div class="input-group">
