@@ -1,6 +1,15 @@
 <?php
+  session_start();
   require 'connectdb.php';
-  require 'sql.php'
+  require 'sql.php';
+  if (isset($_SESSION['student_id'])) {
+    $student_id = $_SESSION['student_id'];
+    $query = "SELECT first_name FROM student WHERE student_id = '$student_id'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $result = $statement->fetch();
+    $first_name = $result['first_name'];
+  }
 ?>
 
 <!doctype html>
@@ -62,7 +71,9 @@
   <div class="container" style="margin-top: 1%;">
     <!-- Jumbotron -->
     <div class="jumbotron">
-      <h1 class="display-4">Welcome to TutorMe!</h1>
+      <h1 class="display-4">
+        <?php echo isset($first_name) ? 'Welcome, '.$first_name.'!' : 'Welcome to TutorMe!'?>
+      </h1>
       <p class="lead">Taking a hard class? Get homework and exam help from veteran students who've taken the class
         before.
       </p>
