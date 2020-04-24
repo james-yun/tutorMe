@@ -8,18 +8,23 @@
 # [START gae_simple_front_controller]
 switch (@parse_url($_SERVER['REQUEST_URI'])['path']) {
   case '/':
+  case '/homepage.php':
     require 'homepage.php';
     break;
   case '/signup':
+  case '/signup.php':
     require 'signup.php';
     break;
   case '/login':
+  case '/login.php':
     require 'login.php';
     break;
   case '/request':
+  case '/request.php':
     require 'request.php';
     break;
   case '/results':
+  case 'results.php':
     require 'results.php';
     break;
   default:

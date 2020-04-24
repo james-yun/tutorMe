@@ -49,21 +49,31 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="request">Request a Tutor! <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="request.php">Request a Tutor! <span class="sr-only">(current)</span></a>
         </li>
 
+        <?php if (isset($_SESSION['student_id'])): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            @Username
+            <?php echo '@'.$_SESSION['student_id'] ?>
           </a>
+
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">My Profile</a>
             <a class="dropdown-item" href="#">My Appointments</a>
             <a class="dropdown-item" href="#">My Requests</a>
+            <a class="dropdown-item" href="logout.php">Log out</a>
           </div>
         </li>
-
+        <?php else: ?>
+        <li class="nav-item active">
+            <a class="nav-link" href="login.php">Log in</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="signup.php">Sign up</a>
+        </li>
+        <?php endif; ?>
       </ul>
     </div>
   </nav>
@@ -79,7 +89,7 @@
       </p>
       <hr class="my-4">
       <p>Select tutors by class, location, and rating.</p>
-      <a class="btn btn-primary btn-lg" href="request" role="button">Request a tutor</a>
+      <a class="btn btn-primary btn-lg" href="request.php" role="button">Request a tutor</a>
     </div>
 
     <!-- Main Body -->

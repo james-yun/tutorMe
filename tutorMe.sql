@@ -1,16 +1,11 @@
 -- Create and populate tables
 -- https://docs.google.com/document/d/1GcQTdP4tdWakXyjDmUXz2QnnzqDd228vHhhRqt60NrY/edit
 
--- login(student_id, hash, salt)
-CREATE TABLE IF NOT EXISTS login(
-    student_id VARCHAR(7) NOT NULL UNIQUE,
-    hash VARCHAR(255) NOT NULL,
-    PRIMARY KEY (student_id)
-);
-
 -- student(student_id, phone_number, first_name, last_name, venmo_id)
+-- default password: test
 CREATE TABLE IF NOT EXISTS student (
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz' UNIQUE,
+  hash VARCHAR(255) NOT NULL DEFAULT '$2y$10$xTQfPMrj1l7HXnh9f2C24eus0SvCQtwNJNx6PMihUsSi3N/bScO1O',
   phone_number VARCHAR(20) DEFAULT '123-456-7890',
   first_name VARCHAR(20) NOT NULL DEFAULT 'first_name',
   last_name VARCHAR(20) NOT NULL DEFAULT 'last_name', 
