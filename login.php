@@ -44,15 +44,28 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+      <title>TutorMe Login</title>
+      
+    <!-- original styling
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>TutorMe Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="static/signin.css">
+    -->
   </head>
 
   <body class="text-center">
     <form class="form-signin" method="post" action="login">
+      <!-- logo link -->
       <img class="mb-4" src="https://conejovalleytutor.com/wp-content/uploads/2015/06/sq-011-300x300.png" alt="TutorMe" width="120" height="120">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <div class="input-group">
