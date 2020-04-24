@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS takes (
   student_id VARCHAR(7) NOT NULL DEFAULT 'ab0cd',
   course_number VARCHAR(10) NOT NULL DEFAULT 'XX 0000',
   PRIMARY KEY (student_id, course_number),
-  FOREIGN KEY (course_number) REFERENCES course(course_number),
-  FOREIGN KEY (student_id) REFERENCES student(student_id)
+  FOREIGN KEY (course_number) REFERENCES course(course_number) ON DELETE CASCADE,
+  FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE
 );
 
 INSERT INTO takes (student_id, course_number) VALUES
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS locations (
   tutor_id VARCHAR(10) NOT NULL DEFAULT 'xx0xx',
   location VARCHAR(20) DEFAULT '', 
   PRIMARY KEY (tutor_id, location),
-  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id)
+  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id) ON DELETE CASCADE
 );
 
 INSERT INTO locations (tutor_id, location) VALUES
@@ -86,8 +86,8 @@ CREATE TABLE IF NOT EXISTS teaches (
 	tutor_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
   course_number VARCHAR(10) NOT NULL DEFAULT 'ECON9999',
   PRIMARY KEY (tutor_id, course_number),
-  FOREIGN KEY (tutor_id) REFERENCES student(student_id),
-  FOREIGN KEY (course_number) REFERENCES course(course_number)
+  FOREIGN KEY (tutor_id) REFERENCES student(student_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_number) REFERENCES course(course_number) ON DELETE CASCADE
 );
 
 INSERT INTO teaches (tutor_id, course_number) VALUES
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS availability_slot (
   start_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   duration INT NOT NULL DEFAULT 60,
   PRIMARY KEY (tutor_id, start_time, duration),
-  FOREIGN KEY (tutor_id) REFERENCES student(student_id)
+  FOREIGN KEY (tutor_id) REFERENCES student(student_id) ON DELETE CASCADE
 );
 
 DELIMITER $$
@@ -138,9 +138,9 @@ CREATE TABLE IF NOT EXISTS reviews (
   comment VARCHAR(250) DEFAULT '',
   `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (student_id, tutor_id, `timestamp`),
-  FOREIGN KEY (student_id) REFERENCES student(student_id),
-  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id),
-  FOREIGN KEY (course_number) REFERENCES course(course_number),
+  FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
+  FOREIGN KEY (tutor_id) REFERENCES tutor(student_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_number) REFERENCES course(course_number) ON DELETE CASCADE,
   CONSTRAINT cannot_review_yourself CHECK (student_id <> tutor_id)
 );
 
@@ -163,10 +163,10 @@ CREATE TABLE IF NOT EXISTS requests(
   price DECIMAL(5,2) DEFAULT 000.00, 
   isAccepted TINYINT(1) DEFAULT 0,
   PRIMARY KEY (request_id),
-  FOREIGN KEY (student_id) REFERENCES student(student_id),
-  FOREIGN KEY (course_number) REFERENCES course(course_number),
-  FOREIGN KEY (tutor_id, location) REFERENCES locations(tutor_id, location),
-  FOREIGN KEY (tutor_id, course_number) REFERENCES teaches(tutor_id, course_number),
+  FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_number) REFERENCES course(course_number) ON DELETE CASCADE,
+  FOREIGN KEY (tutor_id, location) REFERENCES locations(tutor_id, location) ON DELETE CASCADE,
+  FOREIGN KEY (tutor_id, course_number) REFERENCES teaches(tutor_id, course_number) ON DELETE CASCADE,
   CONSTRAINT cannot_request_yourself CHECK (student_id <> tutor_id)
 );
 
@@ -199,8 +199,8 @@ CREATE TABLE IF NOT EXISTS tutor_me_in (
   student_id VARCHAR(7) NOT NULL DEFAULT 'abc2xyz',
   course_number VARCHAR(10) NOT NULL DEFAULT 'ECON 9999',
   PRIMARY KEY (student_id, course_number),
-  FOREIGN KEY (student_id) REFERENCES student(student_id),
-  FOREIGN KEY (course_number) REFERENCES course(course_number)
+  FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_number) REFERENCES course(course_number) ON DELETE CASCADE
 );
 
 INSERT INTO tutor_me_in (student_id, course_number) VALUES
