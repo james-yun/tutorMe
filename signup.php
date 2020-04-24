@@ -51,11 +51,11 @@
     <div class="form-row">
         <div class="col">
             <label for="firstName" class="sr-only">First name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required autofocus>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" maxlength="20" required autofocus>
         </div>
         <div class="col">
             <label for="lastName" class="sr-only">Last name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" required>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" maxlength="20" required>
         </div>
     </div>
     <div class="input-group">
