@@ -14,6 +14,19 @@
   $last_name = $result['last_name'];
   $phone_number = $result['phone_number'];
   $venmo_id = $result['venmo_id'];
+
+  $query = "SELECT student_id, isPaid FROM tutor WHERE student_id = '$student_id'";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  if (count($results) == 0) {
+      $isTutor = false;
+      $isPaid = false;
+  } else {
+      $isTutor = true;
+      $result = $results[0];
+      $isPaid = $result['isPaid'];
+  }
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST['firstName'])){
             $first_name = $_POST['firstName'];
@@ -27,6 +40,25 @@
             } else {
                 $error = "Failed to update info";
             }
+            $isTutorNew = isset($_POST['isTutor']);
+            $isPaidNew = isset($_POST['isPaid']);
+            if (!$isTutor and $isTutorNew) {
+                $query = "INSERT INTO tutor (student_id, isPaid) VALUES ('$student_id', $isPaidNew)";
+                $statement = $db->prepare($query);
+                $statement->execute();
+            } elseif ($isTutor and $isPaid != $isPaidNew) {
+                $query = "UPDATE tutor SET isPaid='$isPaidNew' WHERE student_id='$student_id'";
+                $statement = $db->prepare($query);
+                $statement->execute();
+            } elseif ($isTutor and !$isTutorNew) {
+                $query = "DELETE FROM tutor WHERE student_id='$student_id'";
+                $statement = $db->prepare($query);
+                $statement->execute();
+                $isPaidNew = false;
+            }
+            $isTutor = $isTutorNew;
+            $isPaid = $isPaidNew;
+            echo $isPaid;
       } elseif (isset($_POST['oldPassword'])) {
             $old_password = $_POST['oldPassword'];
             $query = "SELECT hash FROM student WHERE student_id = '$student_id'";
@@ -96,6 +128,18 @@
               <?php echo $error; ?>
             </div>
         <?php endif; ?>
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="isTutor" id="isTutor" <?php if ($isTutor) echo "checked"?>>
+              <label class="form-check-label" for="isTutor">
+                  Are you a tutor?
+              </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="isPaid" id="isPaid" <?php if (!$isTutor) echo " disabled"; if ($isPaid) echo " checked" ?>>
+              <label class="form-check-label" for="isPaid">
+                  Do you get paid?
+              </label>
+          </div>
         <button type="submit" class="btn btn-primary mt-2">Submit</button>
       </form>
 
