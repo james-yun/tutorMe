@@ -46,6 +46,7 @@
 
 <body class="text-center">
 <form class="form-signin needs-validation" method="post" action="signup.php" novalidate>
+    <!-- logo here -->
     <img class="mb-4" src="https://conejovalleytutor.com/wp-content/uploads/2015/06/sq-011-300x300.png" alt="TutorMe" width="120" height="120">
     <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
     <div class="form-row">
