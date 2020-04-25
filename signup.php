@@ -91,7 +91,7 @@
             <input type="checkbox" value="remember-me"> Remember me
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" style="background-color: #7F0FFF;" style="border: none;" type="submit">Sign up</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020 TutorMe</p>
 </form>
 
