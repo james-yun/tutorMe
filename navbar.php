@@ -17,7 +17,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="request.php">Request a Tutor! <span class="sr-only">(current)</span></a>
       </li>
-
+      <li class="nav-item active">
+        <a class="nav-link" href="review.php">Review a Tutor! <span class="sr-only">(current)</span></a>
+      </li>
       <?php if (isset($_SESSION['student_id'])): ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"

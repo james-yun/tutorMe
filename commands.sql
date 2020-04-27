@@ -22,6 +22,10 @@ UPDATE tutor
 SET isPaid = 1 
 WHERE student_id = 'up3f';
 
+
+--Deleting Account
+DELETE FROM student WHERE user = 'jp5qw';
+
 -- Make a request
 INSERT INTO requests
   (student_id, tutor_id, course_number, location, start_time, duration, price, isAccepted)

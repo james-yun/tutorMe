@@ -9,6 +9,12 @@
     $statement->execute();
     $result = $statement->fetch();
     $first_name = $result['first_name'];
+
+    # get classes
+    $query = "SELECT student_id, course.course_number, course_name FROM (SELECT * from takes WHERE student_id='$student_id') as takes RIGHT JOIN course ON course.course_number = takes.course_number;";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $courses = $statement->fetchAll();
   }
 ?>
 
@@ -55,7 +61,32 @@
       <a class="btn btn-primary btn-lg" href="request.php" role="button">Request a tutor</a>
     </div>
 
-    <!-- Main Body -->
+    <h3>All classes</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course number</th>
+                <th>Course name</th>
+                <th>Add/Drop</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($courses as $course):?>
+            <tr>
+                <td><?php echo $course['course_number'] ?></td>
+                <td><?php echo $course['course_name'] ?></td>
+                <td>
+                    <?php if (isset($course['student_id'])): ?>
+                    <a class="btn btn-danger btn-sm" href="#" role="button">Drop</a>
+                    <?php else: ?>
+                    <a class="btn btn-primary btn-sm" href="#" role="button">Add</a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <h3>Current tutors available</h3>
     <table class="table">
       <thead>
         <tr>
@@ -66,7 +97,6 @@
           <th scope="col">Request</th>
         </tr>
       </thead>
-
       <tbody>
         <?php
           $lessons = getLessons();

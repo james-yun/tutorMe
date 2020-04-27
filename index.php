@@ -29,6 +29,10 @@ switch (@parse_url($_SERVER['REQUEST_URI'])['path']) {
   case '/request.php':
     require 'request.php';
     break;
+  case '/review':
+  case '/review.php':
+    require 'review.php';
+    break;
   case '/results':
   case 'results.php':
     require 'results.php';
