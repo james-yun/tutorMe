@@ -9,12 +9,14 @@
       if (isset($_POST['add'])) {
         $course = $_POST['add'];
         $query = "INSERT INTO takes (student_id, course_number) VALUES ('$student_id', '$course')";
+        $statement = $db->prepare($query);
+        $statement->execute();
       } elseif (isset($_POST['drop'])) {
         $course = $_POST['drop'];
         $query = "DELETE FROM takes WHERE student_id='$student_id' AND course_number='$course'";
+        $statement = $db->prepare($query);
+        $statement->execute();
       }
-      $statement = $db->prepare($query);
-      $statement->execute();
     }
 
     $query = "SELECT first_name FROM student WHERE student_id = '$student_id'";
@@ -24,7 +26,29 @@
     $first_name = $result['first_name'];
 
     # get classes
-    $query = "SELECT student_id, course.course_number, course_name FROM (SELECT * from takes WHERE student_id='$student_id') as takes RIGHT JOIN course ON course.course_number = takes.course_number;";
+    $query = "SELECT student_id, course.course_number, course_name FROM (SELECT * from takes WHERE student_id='$student_id') as takes RIGHT JOIN course ON course.course_number = takes.course_number";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['courseNumber'])) {
+            if ($_POST['courseNumber'] == '▲') {
+              $query = $query." ORDER BY course_number DESC";
+            } elseif ($_POST['courseNumber'] == '▼') {
+              $query = $query." ORDER BY course_number ASC";
+            }
+          echo $query;
+        } elseif (isset($_POST['courseName'])) {
+          if ($_POST['courseName'] == '▲') {
+            $query = $query." ORDER BY course_name DESC";
+          } elseif ($_POST['courseName'] == '▼') {
+            $query = $query." ORDER BY course_name ASC";
+          }
+        } elseif (isset($_POST['addDrop'])) {
+          if ($_POST['addDrop'] == '▲') {
+            $query = $query." ORDER BY student_id DESC";
+          } elseif ($_POST['addDrop'] == '▼') {
+            $query = $query." ORDER BY student_id ASC";
+          }
+        }
+    }
     $statement = $db->prepare($query);
     $statement->execute();
     $courses = $statement->fetchAll();
@@ -79,9 +103,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Course number</th>
-                <th>Course name</th>
-                <th>Add/Drop</th>
+                <th>Course number<form class="d-inline" method="post"><input class="btn d-inline" type="submit" value="▲" name="courseNumber"><input class="btn d-inline" type="submit" value="▼" name="courseNumber"></form></th>
+                <th>Course name<form class="d-inline" method="post"><input class="btn d-inline" type="submit" value="▲" name="courseName"><input class="btn d-inline" type="submit" value="▼" name="courseName"></form></th>
+                <th>Add/Drop<form class="d-inline" method="post"><input class="btn d-inline" type="submit" value="▲" name="addDrop"><input class="btn d-inline" type="submit" value="▼" name="addDrop"></form></th>
             </tr>
         </thead>
         <tbody>
@@ -140,13 +164,6 @@
       </tbody>
     </table>
   </div>
-  <script>
-      $(document).ready(function(){
-          $("a.submit").click(function(){
-              document.getElementById("myForm").submit();
-          });
-      });
-  </script>
   <?php include 'footer.php'; ?>
 </body>
 
