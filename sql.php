@@ -23,3 +23,34 @@ FROM teaches
 
     return $results;
 }
+function getTutorId($tname)
+{
+    global $db;
+    $query = "SELECT student_id FROM student WHERE CONCAT(first_name, ' ', last_name) = :tname limit 1";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':tname', $tname);
+    $statement->execute();
+    $results = $statement->fetch();
+
+    return $results['student_id'];
+}
+
+function insertReview($student_id, $tutor_id, $course_number, $star_rating, $comment){
+    global $db;
+    $query = "INSERT INTO reviews
+    (student_id, tutor_id, course_number, star_rating, comment, timestamp)
+    VALUES
+    (student_id = :student_id, tutor_id = :tutor_id, course_number = :course_number, star_rating = :star_rating, comment = :comment,  CURRENT_TIMESTAMP);";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':student_id', $student_id);
+    $statement->bindValue(':tutor_id', $tutor_id);
+    $statement->bindValue(':course_number', $course_number);
+    $statement->bindValue(':star_rating', $star_rating);
+    $statement->bindValue(':comment', $comment);
+
+    $statement->execute();
+    echo implode($statement->errorInfo());
+
+    
+}
+?>
