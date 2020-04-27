@@ -41,6 +41,7 @@
   </script>
   <!-- <link rel="stylesheet" type="text/css" href="static/style.css"> -->
   <link rel="stylesheet" href="static/theme.css">
+    <link rel="icon" type="image/png" href="static/logo.png">
   <title>TutorMe</title>
 </head>
 

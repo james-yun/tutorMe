@@ -33,6 +33,7 @@ $student_id = $_SESSION['student_id'];
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="static/theme.css">
+    <link rel="icon" type="image/png" href="static/logo.png">
 
     <title>TutorMe - Review</title>
 
