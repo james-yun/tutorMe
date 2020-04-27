@@ -48,30 +48,29 @@ $student_id = $_SESSION['student_id'];
         <div class="row justify-content-center">
             <h1>Review Tutor</h1>
         </div>
-        </br>
-
+        <br>
 
         <form action= "<?php $_SERVER['PHP_SELF']?>" name = "submitReview" method = "post">
-        <div class = "form-group">
-            <label for = "subject">Course Number</label>
-            <select class ="form-control" id = "course_number" name = "course_number" >
-                <option selected>Choose...</option>
+        <div class="form-group">
+            <label for="course_number">Course Number</label>
+            <select class ="form-control" id ="course_number" name = "course_number" required>
+                <option selected disabled>Choose...</option>
                 <option value ="CS 3250">CS 3250</option>
                 <option value ="CS 4102">CS 4102</option>
                 <option value ="CS 4750">CS 4750</option>
              </select>
         </div>
-        <div class = "form-group">
-            <label for = "professor">Tutor</label>
-            <select class ="form-control" id = "professor" name = "tutor_id">
-                <option selected>Choose...</option>
-                <option value ="Upsorn Praphamontripong">Upsorn Praphamontripong</option>
-                <option value ="James Yun">James Yun</option>
+        <div class="form-group">
+            <label for="professor">Tutor</label>
+            <select class="form-control" id="professor" name="tutor_id" required>
+                <option selected disabled>Choose...</option>
+                <option value="Upsorn Praphamontripong">Upsorn Praphamontripong</option>
+                <option value="James Yun">James Yun</option>
              </select>
         </div>
         <div class="form-group">
             <label for="rating">Rating</label>
-            <select multiple class="form-control" id="rating" name = "star_rating">  
+            <select multiple class="form-control" id="rating" name="star_rating" required>
                 <option value = 1>1</option>
                 <option value = 2>2</option>
                 <option value = 3>3</option>
@@ -82,33 +81,23 @@ $student_id = $_SESSION['student_id'];
         
         <div class="form-group">
             <label for="comment">Describe your experience with your tutor: </label>
-            <textarea class="form-control" id="comment" name = "comment" rows="7"></textarea>
+            <textarea class="form-control" id="comment" name = "comment" rows="7" required></textarea>
         </div>
         <div class="row justify-content-center">
-        <button type = "submit" name = "action" value = "Submit Review" class = "btn btn-primary">Submit</button>
-        </div>
+            <button type = "submit" name = "action" value = "Submit Review" class = "btn btn-primary">Submit</button>
         </div>
         </form>
+    </div>
 
 
-
-
-
-
-
- 
-    
 
 <?php 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
      if(!empty($_POST['action']) && ($_POST['action'] == 'Submit Review')){
         if (!empty($_POST['course_number']) && !empty($_POST['tutor_id']) && !empty($_POST['star_rating'] && !empty($_POST['comment'])))
         {
-            echo $student_id;
             $tid = getTutorId($_POST['tutor_id']);
-            //echo $tid;
-            insertReview($student_id,$tid, $_POST['course_number'], $_POST['star_rating'], $_POST['comment']);
-            
+            insertReview($student_id, $tid, $_POST['course_number'], $_POST['star_rating'], $_POST['comment']);
         }
      }
     
@@ -116,5 +105,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 <!-- <?php include 'footer.php'; ?>  -->
 </body>
-</div>
 </html>

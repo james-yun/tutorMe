@@ -37,20 +37,9 @@ function getTutorId($tname)
 
 function insertReview($student_id, $tutor_id, $course_number, $star_rating, $comment){
     global $db;
-    $query = "INSERT INTO reviews
-    (student_id, tutor_id, course_number, star_rating, comment, timestamp)
-    VALUES
-    (student_id = :student_id, tutor_id = :tutor_id, course_number = :course_number, star_rating = :star_rating, comment = :comment,  CURRENT_TIMESTAMP);";
+    $query = "INSERT INTO reviews (student_id, tutor_id, course_number, star_rating, comment) VALUES
+('$student_id', '$tutor_id', '$course_number', $star_rating, '$comment');";
     $statement = $db->prepare($query);
-    $statement->bindValue(':student_id', $student_id);
-    $statement->bindValue(':tutor_id', $tutor_id);
-    $statement->bindValue(':course_number', $course_number);
-    $statement->bindValue(':star_rating', $star_rating);
-    $statement->bindValue(':comment', $comment);
-
     $statement->execute();
     echo implode($statement->errorInfo());
-
-    
 }
-?>
