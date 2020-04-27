@@ -34,7 +34,6 @@
             } elseif ($_POST['courseNumber'] == '▼') {
               $query = $query." ORDER BY course_number ASC";
             }
-          echo $query;
         } elseif (isset($_POST['courseName'])) {
           if ($_POST['courseName'] == '▲') {
             $query = $query." ORDER BY course_name DESC";
