@@ -75,7 +75,7 @@
       <a class="btn btn-primary btn-lg" href="request.php" role="button">Request a tutor</a>
     </div>
     <?php if (isset($student_id)): ?>
-    <h3>All classes</h3>
+    <h3>My classes</h3>
     <table class="table">
         <thead>
             <tr>
@@ -133,13 +133,20 @@
             <?php echo $lesson['avg_star_rating']; ?>
           </td>
           <td>
-            <a class="btn btn-primary btn-sm" href="#" role="button">Request tutor</a>
+            <a class="btn btn-primary btn-sm" href="request.php" role="button">Request tutor</a>
           </td>
         </tr>
         <?php endforeach;?>
       </tbody>
     </table>
   </div>
+  <script>
+      $(document).ready(function(){
+          $("a.submit").click(function(){
+              document.getElementById("myForm").submit();
+          });
+      });
+  </script>
   <?php include 'footer.php'; ?>
 </body>
 
