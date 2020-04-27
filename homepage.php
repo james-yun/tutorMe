@@ -60,7 +60,7 @@
       <p>Select tutors by class, location, and rating.</p>
       <a class="btn btn-primary btn-lg" href="request.php" role="button">Request a tutor</a>
     </div>
-
+    <?php if (isset($student_id)): ?>
     <h3>All classes</h3>
     <table class="table">
         <thead>
@@ -86,6 +86,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
     <h3>Current tutors available</h3>
     <table class="table">
       <thead>
