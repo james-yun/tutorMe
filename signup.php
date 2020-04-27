@@ -47,7 +47,7 @@
 <body class="text-center">
 <form class="form-signin needs-validation" method="post" action="signup.php" novalidate>
     <!-- logo here -->
-    <img class="mb-4" src="https://conejovalleytutor.com/wp-content/uploads/2015/06/sq-011-300x300.png" alt="TutorMe" width="120" height="120">
+    <img class="mb-4" src="static/logo.png" alt="TutorMe" height="120">
     <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
     <div class="form-row">
         <div class="col">
@@ -91,7 +91,7 @@
             <input type="checkbox" value="remember-me"> Remember me
         </label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" style="background-color: #7F0FFF;" style="border: none;" type="submit">Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" style="background-color: #7F0FFF; border: none;" type="submit">Sign up</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2020 TutorMe</p>
 </form>
 
