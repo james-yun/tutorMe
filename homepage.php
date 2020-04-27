@@ -4,6 +4,19 @@
   require 'sql.php';
   if (isset($_SESSION['student_id'])) {
     $student_id = $_SESSION['student_id'];
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (isset($_POST['add'])) {
+        $course = $_POST['add'];
+        $query = "INSERT INTO takes (student_id, course_number) VALUES ('$student_id', '$course')";
+      } elseif (isset($_POST['drop'])) {
+        $course = $_POST['drop'];
+        $query = "DELETE FROM takes WHERE student_id='$student_id' AND course_number='$course'";
+      }
+      $statement = $db->prepare($query);
+      $statement->execute();
+    }
+
     $query = "SELECT first_name FROM student WHERE student_id = '$student_id'";
     $statement = $db->prepare($query);
     $statement->execute();
@@ -77,11 +90,13 @@
                 <td><?php echo $course['course_number'] ?></td>
                 <td><?php echo $course['course_name'] ?></td>
                 <td>
+                    <form method="post" action="homepage.php">
                     <?php if (isset($course['student_id'])): ?>
-                    <a class="btn btn-danger btn-sm" href="#" role="button">Drop</a>
+                    <button class="btn btn-danger btn-sm" type="submit" name="drop" value="<?php echo $course['course_number'] ?>" role="button">Drop</button>
                     <?php else: ?>
-                    <a class="btn btn-primary btn-sm" href="#" role="button">Add</a>
+                    <button class="btn btn-primary btn-sm" type="submit" name="add" value="<?php echo $course['course_number'] ?>" role="button">Add</button>
                     <?php endif; ?>
+                    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
